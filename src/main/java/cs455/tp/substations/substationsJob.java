@@ -1,4 +1,4 @@
-package cs455.aqi.substations;
+package cs455.tp.substations;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -17,7 +17,7 @@ import java.io.IOException;
 public class substationsJob{
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
-        Job job = Job.getInstance(conf, "substations");
+        Job job = Job.getInstance(conf, "substationsJob");
         // current class
         job.setJarByClass(substationsJob.class);
         // Mapper
@@ -35,8 +35,8 @@ public class substationsJob{
         // set number of tasks
         job.setNumReduceTasks(1); 
         System.out.println(args[0]);
-        FileInputFormat.addInputPath(job, new Path(args[1]));
-        FileOutputFormat.setOutputPath(job, new Path(args[2]));
+        FileInputFormat.addInputPath(job, new Path(args[0]));
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }      
 }

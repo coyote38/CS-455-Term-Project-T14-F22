@@ -1,4 +1,4 @@
-package cs455.aqi.substations;
+package cs455.tp.substations;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
