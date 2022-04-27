@@ -1,4 +1,4 @@
-package cs455.tp.substations;
+package cs455.tp.power_plants;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -15,12 +15,12 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
-    Receives: <Power Region, #Substation lines>
-    Sums up #Substation lines for each key (month)
-    Returns sums for power region
+    Receives: <Power Region + Power source, 1>
+    Sums up # per region power source
+    Returns sums for power region power source
 */
 
-public class substationsReducer extends Reducer<Text, IntWritable, Text, DoubleWritable> {
+public class powerReducer extends Reducer<Text, IntWritable, Text, DoubleWritable> {
     @Override
     public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException{
         // sum of all aqi scores

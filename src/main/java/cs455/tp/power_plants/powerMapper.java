@@ -1,4 +1,4 @@
-package cs455.tp.substations;
+package cs455.tp.power_plants;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -14,11 +14,11 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
     Mapper: Read each line of CSV data
-    Grab ID, Power Region, and #Substation lines
-    Returns: <Power Region, #Substation lines>
+    Grab ID, Power Region, and Power Source
+    Returns: <Power Region + Power Source, 1>
 */ 
 
-public class substationsMapper extends Mapper<Object, Text, Text, IntWritable> {
+public class powerMapper extends Mapper<Object, Text, Text, IntWritable> {
 
     private TreeMap<Integer, String> treeMap;
  
@@ -29,13 +29,18 @@ public class substationsMapper extends Mapper<Object, Text, Text, IntWritable> {
 
     @Override
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException{
+        System.out.println(value);
         String input = value.toString();
+        System.out.println(input);
         String[] lineSplit = input.split(",");
-        String substationId = lineSplit[0];
+        System.out.println("0" + lineSplit[0]);
+        System.out.println("1" + lineSplit[1]);
+        System.out.println("1" + lineSplit[2]);
+        // int plantId = Integer.parseInt(lineSplit[0]);
         String powerRegion = lineSplit[1];
-        int connections = Integer.parseInt(lineSplit[2]);
+        String powerSource = lineSplit[2];
 
-        context.write(new Text(powerRegion), new IntWritable(connections));
+        context.write(new Text(powerRegion + powerSource), new IntWritable(1));
     }
 
 }
