@@ -1,4 +1,4 @@
-package cs455.tp.substations;
+package cs455.tp.balance;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -16,11 +16,11 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
     Receives: <Power Region, #Substation lines>
-    Sums up #Substation lines for each key (month)
+    Sums up length of lines for each key region
     Returns sums for power region
 */
 
-public class substationsReducer extends Reducer<Text, IntWritable, Text, DoubleWritable> {
+public class balanceReducer extends Reducer<Text, IntWritable, Text, DoubleWritable> {
     @Override
     public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException{
         // sum of all aqi scores
@@ -29,10 +29,14 @@ public class substationsReducer extends Reducer<Text, IntWritable, Text, DoubleW
         double num = 0;
         double avg = 0;
         for(IntWritable val : values){
-            // num += 1;
+            num += 1;
             sum += val.get();
         }
-        // avg = sum / num;
-        context.write(new Text(key.toString()), new DoubleWritable(sum));
+        // System.out.println("sum" + sum);
+        // System.out.println("num" + num);
+
+        avg = sum / num;
+        // System.out.println("avg" + avg);
+        context.write(new Text(key.toString()), new DoubleWritable(avg));
     }
 }

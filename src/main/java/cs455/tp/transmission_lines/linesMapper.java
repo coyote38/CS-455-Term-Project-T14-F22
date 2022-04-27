@@ -1,4 +1,4 @@
-package cs455.tp.substations;
+package cs455.tp.transmission_lines;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -14,11 +14,11 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 /*
     Mapper: Read each line of CSV data
-    Grab ID, Power Region, and #Substation lines
-    Returns: <Power Region, #Substation lines>
+    Grab ID, Power Region, and length of lines
+    Returns: <Power Region, length of lines lines>
 */ 
 
-public class substationsMapper extends Mapper<Object, Text, Text, IntWritable> {
+public class linesMapper extends Mapper<Object, Text, Text, IntWritable> {
 
     private TreeMap<Integer, String> treeMap;
  
@@ -33,9 +33,9 @@ public class substationsMapper extends Mapper<Object, Text, Text, IntWritable> {
         String[] lineSplit = input.split(",");
         String substationId = lineSplit[0];
         String powerRegion = lineSplit[1];
-        int connections = Integer.parseInt(lineSplit[2]);
+        int length = Integer.parseInt(lineSplit[2]);
 
-        context.write(new Text(powerRegion), new IntWritable(connections));
+        context.write(new Text(powerRegion), new IntWritable(length));
     }
 
 }
